@@ -17,6 +17,7 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
         .link_libc = true,
         .pic = if (shared) true else null,
+        .sanitize_c = if (optimize == .Debug) null else .off,
     });
     const lib: *std.Build.Step.Compile = b.addLibrary(.{
         .name = "tree-sitter",
