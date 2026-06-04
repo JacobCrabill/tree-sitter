@@ -1545,8 +1545,9 @@ static void ts_parser__handle_error(
   }
 
   for (unsigned i = previous_version_count; i < version_count; i++) {
-    bool did_merge = ts_stack_merge(self->stack, version, previous_version_count);
-    ts_assert(did_merge);
+    if (!ts_stack_merge(self->stack, version, previous_version_count)) {
+      ts_stack_remove_version(self->stack, previous_version_count);
+    }
   }
 
   ts_stack_record_summary(self->stack, version, MAX_SUMMARY_DEPTH);
@@ -1913,7 +1914,7 @@ static bool ts_parser__balance_subtree(TSParser *self) {
       return false;
     }
 
-    MutableSubtree tree = *array_get(&self->tree_pool.tree_stack, 
+    MutableSubtree tree = *array_get(&self->tree_pool.tree_stack,
       self->tree_pool.tree_stack.size - 1
     );
 
