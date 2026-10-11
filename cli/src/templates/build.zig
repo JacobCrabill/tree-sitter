@@ -24,7 +24,7 @@ pub fn build(b: *std.Build) !void {
         .file = b.path("src/parser.c"),
         .flags = &.{"-std=c11"},
     });
-    if (hasScanner(b.build_root.handle)) {
+    if (hasScanner(b.root)) {
         lib.addCSourceFile(.{
             .file = b.path("src/scanner.c"),
             .flags = &.{"-std=c11"},
@@ -73,7 +73,7 @@ pub fn build(b: *std.Build) !void {
     test_step.dependOn(&run_tests.step);
 }
 
-inline fn hasScanner(dir: std.fs.Dir) bool {
+inline fn hasScanner(dir: std.Build.Cache.Path) bool {
     dir.access("src/scanner.c", .{}) catch return false;
     return true;
 }

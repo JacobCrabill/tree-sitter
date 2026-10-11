@@ -1,7 +1,7 @@
 .{
     .name = .tree_sitter,
     .fingerprint = 0x841224b447ac0d4f,
-    .minimum_zig_version = "0.16.0",
+    .minimum_zig_version = "0.17.0",
     .version = "0.26.0",
     .paths = .{
         "build.zig",
